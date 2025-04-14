@@ -25,7 +25,7 @@ metadata:
 spec:
   type: service
   lifecycle: production
-  owner: group:default/exercise-tracker-team
+  owner: upendrasahu
   system: fitness-platform
   dependsOn:
     - resource:exercise-tracker-db
@@ -47,7 +47,7 @@ metadata:
 spec:
   type: service
   lifecycle: production
-  owner: group:default/exercise-tracker-team
+  owner: upendrasahu
   system: fitness-platform
   dependsOn:
     - resource:exercise-tracker-db
@@ -65,7 +65,7 @@ metadata:
     - database
 spec:
   type: database
-  owner: group:default/exercise-tracker-team
+  owner: upendrasahu
   system: fitness-platform
 
 ---
@@ -75,7 +75,7 @@ metadata:
   name: fitness-platform
   description: A platform for fitness tracking and AI coaching
 spec:
-  owner: group:default/exercise-tracker-team
+  owner: upendrasahu
   domain: fitness
 
 ---
@@ -93,6 +93,7 @@ spec:
   members:
     - upendrasahu
   parent: default
+  children: []  # Empty array as this team doesn't have child groups
 
 ---
 apiVersion: backstage.io/v1alpha1
