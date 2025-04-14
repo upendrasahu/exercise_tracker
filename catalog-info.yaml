@@ -6,16 +6,26 @@ metadata:
   annotations:
     github.com/project-slug: upendrasahu/exercise-tracker
     backstage.io/techdocs-ref: dir:.
+    backstage.io/view-url: https://github.com/upendrasahu/exercise-tracker/tree/main
+    backstage.io/edit-url: https://github.com/upendrasahu/exercise-tracker/edit/main
+    backstage.io/source-location: url:https://github.com/upendrasahu/exercise-tracker
   tags:
     - python
     - flask
     - kubernetes
     - fitness
     - openai
+  links:
+    - url: https://github.com/upendrasahu/exercise-tracker
+      title: GitHub Repository
+      icon: github
+    - url: https://github.com/upendrasahu/exercise-tracker/issues
+      title: Issues
+      icon: github
 spec:
   type: service
   lifecycle: production
-  owner: user:upendrasahu
+  owner: group:default/exercise-tracker-team
   system: fitness-platform
   dependsOn:
     - resource:exercise-tracker-db
@@ -37,7 +47,7 @@ metadata:
 spec:
   type: service
   lifecycle: production
-  owner: user:upendrasahu
+  owner: group:default/exercise-tracker-team
   system: fitness-platform
   dependsOn:
     - resource:exercise-tracker-db
@@ -55,7 +65,7 @@ metadata:
     - database
 spec:
   type: database
-  owner: user:upendrasahu
+  owner: group:default/exercise-tracker-team
   system: fitness-platform
 
 ---
@@ -65,5 +75,34 @@ metadata:
   name: fitness-platform
   description: A platform for fitness tracking and AI coaching
 spec:
-  owner: user:upendrasahu
+  owner: group:default/exercise-tracker-team
   domain: fitness
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: exercise-tracker-team
+  description: Team responsible for the Exercise Tracker application
+spec:
+  type: team
+  profile:
+    displayName: Exercise Tracker Team
+    email: team@example.com
+    picture: https://example.com/teams/exercise-tracker.jpeg
+  members:
+    - upendrasahu
+  parent: default
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: upendrasahu
+  description: Lead Developer for Exercise Tracker
+spec:
+  profile:
+    displayName: Upendra Sahu
+    email: upendrasahu@example.com
+    picture: https://example.com/staff/upendrasahu.jpeg
+  memberOf: [default/exercise-tracker-team]

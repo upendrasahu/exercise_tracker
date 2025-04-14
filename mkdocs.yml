@@ -1,0 +1,34 @@
+site_name: 'Exercise Tracker'
+site_description: 'An application for tracking and analyzing workout exercises with AI coaching'
+
+nav:
+  - Overview: index.md
+  - User Guide: USER_GUIDE.md
+  - Development:
+    - Getting Started: DEVELOPMENT.md
+    - Installation: INSTALLATION.md
+    - Coach Service: COACH_SERVICE.md
+  - API Reference:
+    - Main API: api-main.md
+    - Coach API: api-coach.md
+
+plugins:
+  - techdocs-core
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.emoji
+
+# Theme customization
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+  palette:
+    primary: indigo
+    accent: indigo
