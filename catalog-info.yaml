@@ -9,8 +9,8 @@ metadata:
     backstage.io/view-url: https://github.com/upendrasahu/exercise_tracker/tree/main
     backstage.io/edit-url: https://github.com/upendrasahu/exercise_tracker/edit/main
     backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
-    github.com/workflows-provider: github
-    github.com/workflows-branch: main
+    github.com/actions-workflows-branch: main
+    github.com/actions-workflow-enforce: "true"
   tags:
     - python
     - flask
@@ -35,6 +35,8 @@ spec:
   dependsOn:
     - resource:exercise-tracker-db
     - component:exercise-tracker-coach
+  providesApis:
+    - exercise-tracker-api
 
 ---
 apiVersion: backstage.io/v1alpha1
@@ -44,8 +46,8 @@ metadata:
   description: AI coaching service that provides personalized fitness advice
   annotations:
     github.com/project-slug: upendrasahu/exercise_tracker
-    github.com/workflows-provider: github
-    github.com/workflows-branch: main
+    github.com/actions-workflows-branch: main
+    github.com/actions-workflow-enforce: "true"
   tags:
     - python
     - flask
@@ -58,6 +60,8 @@ spec:
   system: fitness-platform
   dependsOn:
     - resource:exercise-tracker-db
+  providesApis:
+    - coach-service-api
 
 ---
 apiVersion: backstage.io/v1alpha1
@@ -84,3 +88,155 @@ metadata:
 spec:
   owner: upendrasahu
   domain: fitness
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: exercise-tracker-api
+  description: REST API for tracking exercises and retrieving exercise data
+  tags:
+    - rest
+    - json
+    - exercise
+    - python
+  annotations:
+    backstage.io/source-location: url:https://github.com/upendrasahu/exercise-tracker
+    backstage.io/techdocs-ref: dir:.
+  links:
+    - url: https://github.com/upendrasahu/exercise-tracker/blob/main/docs/api-main.md
+      title: API Documentation
+      icon: doc
+spec:
+  type: openapi
+  lifecycle: production
+  owner: upendrasahu
+  system: fitness-platform
+  definition:
+    $text: |
+      openapi: 3.0.0
+      info:
+        title: Exercise Tracker API
+        version: 1.0.0
+        description: API for managing exercise tracking data
+      paths:
+        /api/exercises:
+          get:
+            summary: Get list of exercises
+            parameters:
+              - name: days
+                in: query
+                description: Number of days to include in the result
+                schema:
+                  type: integer
+                  default: 30
+            responses:
+              '200':
+                description: A list of exercises
+                content:
+                  application/json:
+                    schema:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                          date:
+                            type: string
+                            format: date
+                          sets:
+                            type: integer
+                          reps:
+                            type: integer
+                          weight:
+                            type: number
+                            nullable: true
+                          notes:
+                            type: string
+                            nullable: true
+        /metrics:
+          get:
+            summary: Get Prometheus metrics
+            responses:
+              '200':
+                description: Prometheus metrics in text format
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: coach-service-api
+  description: REST API for AI-powered fitness coaching and personalized advice
+  tags:
+    - rest
+    - json
+    - ai
+    - coach
+    - openai
+  annotations:
+    backstage.io/source-location: url:https://github.com/upendrasahu/exercise-tracker
+    backstage.io/techdocs-ref: dir:.
+  links:
+    - url: https://github.com/upendrasahu/exercise-tracker/blob/main/docs/api-coach.md
+      title: API Documentation
+      icon: doc
+spec:
+  type: openapi
+  lifecycle: production
+  owner: upendrasahu
+  system: fitness-platform
+  definition:
+    $text: |
+      openapi: 3.0.0
+      info:
+        title: Coach Service API
+        version: 1.0.0
+        description: API for obtaining AI-powered fitness advice
+      paths:
+        /api/advice:
+          get:
+            summary: Get personalized fitness advice
+            parameters:
+              - name: days
+                in: query
+                description: Number of days of exercise history to analyze
+                schema:
+                  type: integer
+                  default: 30
+            responses:
+              '200':
+                description: Personalized fitness advice
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        advice:
+                          type: string
+                        generated_at:
+                          type: number
+              '400':
+                description: Error response
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        error:
+                          type: string
+        /health:
+          get:
+            summary: Health check endpoint
+            responses:
+              '200':
+                description: Health status
+                content:
+                  application/json:
+                    schema:
+                      type: object
+                      properties:
+                        status:
+                          type: string
