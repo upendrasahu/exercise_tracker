@@ -101,10 +101,10 @@ metadata:
     - exercise
     - python
   annotations:
-    backstage.io/source-location: url:https://github.com/upendrasahu/exercise-tracker
+    backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
     backstage.io/techdocs-ref: dir:.
   links:
-    - url: https://github.com/upendrasahu/exercise-tracker/blob/main/docs/api-main.md
+    - url: https://github.com/upendrasahu/exercise_tracker/blob/main/docs/api-main.md
       title: API Documentation
       icon: doc
 spec:
@@ -113,56 +113,7 @@ spec:
   owner: upendrasahu
   system: fitness-platform
   definition:
-    $text: |
-      openapi: 3.0.0
-      info:
-        title: Exercise Tracker API
-        version: 1.0.0
-        description: API for managing exercise tracking data
-      paths:
-        /api/exercises:
-          get:
-            summary: Get list of exercises
-            parameters:
-              - name: days
-                in: query
-                description: Number of days to include in the result
-                schema:
-                  type: integer
-                  default: 30
-            responses:
-              '200':
-                description: A list of exercises
-                content:
-                  application/json:
-                    schema:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          name:
-                            type: string
-                          date:
-                            type: string
-                            format: date
-                          sets:
-                            type: integer
-                          reps:
-                            type: integer
-                          weight:
-                            type: number
-                            nullable: true
-                          notes:
-                            type: string
-                            nullable: true
-        /metrics:
-          get:
-            summary: Get Prometheus metrics
-            responses:
-              '200':
-                description: Prometheus metrics in text format
+    $text: ./api-specs/exercise-tracker-api.yaml
 
 ---
 apiVersion: backstage.io/v1alpha1
@@ -177,66 +128,22 @@ metadata:
     - coach
     - openai
   annotations:
-    backstage.io/source-location: url:https://github.com/upendrasahu/exercise-tracker
+    backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
     backstage.io/techdocs-ref: dir:.
   links:
-    - url: https://github.com/upendrasahu/exercise-tracker/blob/main/docs/api-coach.md
-      title: API Documentation
-      icon: doc
+    - url: https://github.com/upendrasahu/exercise_tracker
+      title: GitHub Repository
+      icon: github
+    - url: https://github.com/upendrasahu/exercise_tracker/issues
+      title: Issues
+      icon: github
+    - url: https://github.com/upendrasahu/exercise_tracker/actions
+      title: GitHub Workflows
+      icon: github
 spec:
   type: openapi
   lifecycle: production
   owner: upendrasahu
   system: fitness-platform
   definition:
-    $text: |
-      openapi: 3.0.0
-      info:
-        title: Coach Service API
-        version: 1.0.0
-        description: API for obtaining AI-powered fitness advice
-      paths:
-        /api/advice:
-          get:
-            summary: Get personalized fitness advice
-            parameters:
-              - name: days
-                in: query
-                description: Number of days of exercise history to analyze
-                schema:
-                  type: integer
-                  default: 30
-            responses:
-              '200':
-                description: Personalized fitness advice
-                content:
-                  application/json:
-                    schema:
-                      type: object
-                      properties:
-                        advice:
-                          type: string
-                        generated_at:
-                          type: number
-              '400':
-                description: Error response
-                content:
-                  application/json:
-                    schema:
-                      type: object
-                      properties:
-                        error:
-                          type: string
-        /health:
-          get:
-            summary: Health check endpoint
-            responses:
-              '200':
-                description: Health status
-                content:
-                  application/json:
-                    schema:
-                      type: object
-                      properties:
-                        status:
-                          type: string
+    $text: ./api-specs/coach-service-api.yaml

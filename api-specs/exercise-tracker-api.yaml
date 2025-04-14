@@ -1,0 +1,49 @@
+openapi: 3.0.0
+info:
+  title: Exercise Tracker API
+  version: 1.0.0
+  description: API for managing exercise tracking data
+paths:
+  /api/exercises:
+    get:
+      summary: Get list of exercises
+      parameters:
+        - name: days
+          in: query
+          description: Number of days to include in the result
+          schema:
+            type: integer
+            default: 30
+      responses:
+        '200':
+          description: A list of exercises
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    date:
+                      type: string
+                      format: date
+                    sets:
+                      type: integer
+                    reps:
+                      type: integer
+                    weight:
+                      type: number
+                      nullable: true
+                    notes:
+                      type: string
+                      nullable: true
+  /metrics:
+    get:
+      summary: Get Prometheus metrics
+      responses:
+        '200':
+          description: Prometheus metrics in text format

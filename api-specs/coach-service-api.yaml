@@ -1,0 +1,50 @@
+openapi: 3.0.0
+info:
+  title: Coach Service API
+  version: 1.0.0
+  description: API for obtaining AI-powered fitness advice
+paths:
+  /api/advice:
+    get:
+      summary: Get personalized fitness advice
+      parameters:
+        - name: days
+          in: query
+          description: Number of days of exercise history to analyze
+          schema:
+            type: integer
+            default: 30
+      responses:
+        '200':
+          description: Personalized fitness advice
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  advice:
+                    type: string
+                  generated_at:
+                    type: number
+        '400':
+          description: Error response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /health:
+    get:
+      summary: Health check endpoint
+      responses:
+        '200':
+          description: Health status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
