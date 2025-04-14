@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: exercise-tracker-team
+  description: Team responsible for the Exercise Tracker application
+spec:
+  type: team
+  profile:
+    displayName: Exercise Tracker Team
+    email: team@example.com
+  members:
+    - upendrasahu
+  children: []

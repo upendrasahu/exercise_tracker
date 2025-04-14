@@ -77,33 +77,3 @@ metadata:
 spec:
   owner: upendrasahu
   domain: fitness
-
----
-apiVersion: backstage.io/v1alpha1
-kind: Group
-metadata:
-  name: exercise-tracker-team
-  description: Team responsible for the Exercise Tracker application
-spec:
-  type: team
-  profile:
-    displayName: Exercise Tracker Team
-    email: team@example.com
-    picture: https://example.com/teams/exercise-tracker.jpeg
-  members:
-    - upendrasahu
-  parent: default
-  children: []  # Empty array as this team doesn't have child groups
-
----
-apiVersion: backstage.io/v1alpha1
-kind: User
-metadata:
-  name: upendrasahu
-  description: Lead Developer for Exercise Tracker
-spec:
-  profile:
-    displayName: Upendra Sahu
-    email: upendrasahu@example.com
-    picture: https://example.com/staff/upendrasahu.jpeg
-  memberOf: [default/exercise-tracker-team]

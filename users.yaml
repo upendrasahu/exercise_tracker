@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: upendrasahu
+  description: Lead Developer for Exercise Tracker
+spec:
+  profile:
+    displayName: Upendra Sahu
+    email: upendrasahu@example.com
+  memberOf: [exercise-tracker-team]
