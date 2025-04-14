@@ -9,6 +9,8 @@ metadata:
     backstage.io/view-url: https://github.com/upendrasahu/exercise-tracker/tree/main
     backstage.io/edit-url: https://github.com/upendrasahu/exercise-tracker/edit/main
     backstage.io/source-location: url:https://github.com/upendrasahu/exercise-tracker
+    github.com/workflows-provider: github
+    github.com/workflows-branch: main
   tags:
     - python
     - flask
@@ -21,6 +23,9 @@ metadata:
       icon: github
     - url: https://github.com/upendrasahu/exercise-tracker/issues
       title: Issues
+      icon: github
+    - url: https://github.com/upendrasahu/exercise-tracker/actions
+      title: GitHub Workflows
       icon: github
 spec:
   type: service
@@ -39,6 +44,8 @@ metadata:
   description: AI coaching service that provides personalized fitness advice
   annotations:
     github.com/project-slug: upendrasahu/exercise-tracker
+    github.com/workflows-provider: github
+    github.com/workflows-branch: main
   tags:
     - python
     - flask
