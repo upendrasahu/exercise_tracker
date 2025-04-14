@@ -3,9 +3,9 @@ replicaCount: 1
 # Main exercise tracker service
 exerciseTracker:
   image:
-    repository: exercise-tracker
-    tag: latest
-    pullPolicy: IfNotPresent
+    repository: ghcr.io/upendrasahu/exercise-tracker
+    tag: main
+    pullPolicy: Always
   service:
     type: ClusterIP
     port: 80
@@ -17,6 +17,8 @@ exerciseTracker:
     requests:
       cpu: 100m
       memory: 128Mi
+  # Secret key for Flask sessions and other secure operations
+  secretKey: ""  # base64 encoded "development_secret_key"
   env:
     - name: FLASK_APP
       value: "app.py"
@@ -34,9 +36,9 @@ exerciseTracker:
 coachService:
   enabled: true
   image:
-    repository: exercise-tracker-coach
-    tag: latest
-    pullPolicy: IfNotPresent
+    repository: ghcr.io/upendrasahu/exercise-tracker-coach
+    tag: main
+    pullPolicy: Always
   service:
     type: ClusterIP
     port: 80
@@ -82,7 +84,12 @@ ingress:
 
 persistence:
   enabled: true
-  storageClassName: ""
+  # Using empty string for storageClassName to use the default in Minikube (which is 'standard')
+  storageClassName: "standard"
   accessMode: ReadWriteOnce
   size: 1Gi
   mountPath: /app/data
+  # Minikube-specific settings for local development
+  minikube:
+    enabled: true
+    hostPath: "/data/exercise-tracker"

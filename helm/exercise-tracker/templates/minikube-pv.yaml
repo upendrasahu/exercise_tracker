@@ -1,0 +1,19 @@
+{{- if and .Values.persistence.enabled .Values.persistence.minikube.enabled }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ include "exercise-tracker.fullname" . }}-pv
+  labels:
+    {{- include "exercise-tracker.labels" . | nindent 4 }}
+    app.kubernetes.io/component: storage
+spec:
+  capacity:
+    storage: {{ .Values.persistence.size }}
+  accessModes:
+    - {{ .Values.persistence.accessMode }}
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: {{ .Values.persistence.storageClassName }}
+  hostPath:
+    path: {{ .Values.persistence.minikube.hostPath }}
+    type: DirectoryOrCreate
+{{- end }}

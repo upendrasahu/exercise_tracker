@@ -52,6 +52,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.EXERCISE_IMAGE_NAME }}
           tags: |
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
             type=ref,event=branch
             type=ref,event=pr
             type=semver,pattern={{version}}
@@ -72,6 +73,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.COACH_IMAGE_NAME }}
           tags: |
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
             type=ref,event=branch
             type=ref,event=pr
             type=semver,pattern={{version}}
@@ -85,33 +87,33 @@ jobs:
           tags: ${{ steps.meta-coach.outputs.tags }}
           labels: ${{ steps.meta-coach.outputs.labels }}
 
-  deploy:
-    if: github.ref == 'refs/heads/main'
-    needs: build
-    runs-on: ubuntu-latest
-    environment: production
+  # deploy:
+  #   if: github.ref == 'refs/heads/main'
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   environment: production
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v2
 
-      - name: Install Helm
-        uses: azure/setup-helm@v1
-        with:
-          version: 'v3.8.0'
+  #     - name: Install Helm
+  #       uses: azure/setup-helm@v1
+  #       with:
+  #         version: 'v3.8.0'
 
-      - name: Configure Kubernetes
-        uses: azure/k8s-set-context@v1
-        with:
-          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+  #     - name: Configure Kubernetes
+  #       uses: azure/k8s-set-context@v1
+  #       with:
+  #         kubeconfig: ${{ secrets.KUBE_CONFIG }}
 
-      - name: Deploy to Kubernetes
-        run: |
-          IMAGE_TAG=$(echo $GITHUB_SHA | head -c7)
-          helm upgrade --install exercise-tracker ./helm/exercise-tracker \
-            --set exerciseTracker.image.repository=${{ env.REGISTRY }}/${{ env.EXERCISE_IMAGE_NAME }} \
-            --set exerciseTracker.image.tag=$IMAGE_TAG \
-            --set coachService.image.repository=${{ env.REGISTRY }}/${{ env.COACH_IMAGE_NAME }} \
-            --set coachService.image.tag=$IMAGE_TAG \
-            --set coachService.openaiApiKey=${{ secrets.OPENAI_API_KEY }} \
-            --namespace default
+      # - name: Deploy to Kubernetes
+      #   run: |
+      #     IMAGE_TAG=$(echo $GITHUB_SHA | head -c7)
+      #     helm upgrade --install exercise-tracker ./helm/exercise-tracker \
+      #       --set exerciseTracker.image.repository=${{ env.REGISTRY }}/${{ env.EXERCISE_IMAGE_NAME }} \
+      #       --set exerciseTracker.image.tag=$IMAGE_TAG \
+      #       --set coachService.image.repository=${{ env.REGISTRY }}/${{ env.COACH_IMAGE_NAME }} \
+      #       --set coachService.image.tag=$IMAGE_TAG \
+      #       --set coachService.openaiApiKey=${{ secrets.OPENAI_API_KEY }} \
+      #       --namespace default
