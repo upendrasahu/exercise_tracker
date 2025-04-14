@@ -5,7 +5,7 @@ metadata:
   description: An application for tracking and analyzing workout exercises with AI coaching
   annotations:
     github.com/project-slug: upendrasahu/exercise_tracker
-    backstage.io/techdocs-ref: dir:.
+    backstage.io/techdocs-ref: local
     backstage.io/view-url: https://github.com/upendrasahu/exercise_tracker/tree/main
     backstage.io/edit-url: https://github.com/upendrasahu/exercise_tracker/edit/main
     backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
@@ -54,7 +54,7 @@ metadata:
     backstage.io/kubernetes-id: exercise-tracker-coach
     argocd/app-name: exercise-tracker-coach
     prometheus.io/rule: coach-service-alerts
-    backstage.io/techdocs-ref: dir:.
+    backstage.io/techdocs-ref: local
   tags:
     - python
     - flask
@@ -109,7 +109,7 @@ metadata:
     - python
   annotations:
     backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
-    backstage.io/techdocs-ref: dir:.
+    backstage.io/techdocs-ref: local
     prometheus.io/rule: exercise-tracker-api-alerts
   links:
     - url: https://github.com/upendrasahu/exercise_tracker/blob/main/docs/api-main.md
@@ -137,7 +137,7 @@ metadata:
     - openai
   annotations:
     backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
-    backstage.io/techdocs-ref: dir:.
+    backstage.io/techdocs-ref: local
     prometheus.io/rule: coach-service-api-alerts
   links:
     - url: https://github.com/upendrasahu/exercise_tracker
