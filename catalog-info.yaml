@@ -11,6 +11,9 @@ metadata:
     backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
     github.com/actions-workflows-branch: main
     github.com/actions-workflow-enforce: "true"
+    backstage.io/kubernetes-id: exercise-tracker
+    argocd/app-name: exercise-tracker
+    prometheus.io/rule: exercise-tracker-alerts
   tags:
     - python
     - flask
@@ -48,6 +51,10 @@ metadata:
     github.com/project-slug: upendrasahu/exercise_tracker
     github.com/actions-workflows-branch: main
     github.com/actions-workflow-enforce: "true"
+    backstage.io/kubernetes-id: exercise-tracker-coach
+    argocd/app-name: exercise-tracker-coach
+    prometheus.io/rule: coach-service-alerts
+    backstage.io/techdocs-ref: dir:.
   tags:
     - python
     - flask
@@ -103,6 +110,7 @@ metadata:
   annotations:
     backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
     backstage.io/techdocs-ref: dir:.
+    prometheus.io/rule: exercise-tracker-api-alerts
   links:
     - url: https://github.com/upendrasahu/exercise_tracker/blob/main/docs/api-main.md
       title: API Documentation
@@ -130,6 +138,7 @@ metadata:
   annotations:
     backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
     backstage.io/techdocs-ref: dir:.
+    prometheus.io/rule: coach-service-api-alerts
   links:
     - url: https://github.com/upendrasahu/exercise_tracker
       title: GitHub Repository
