@@ -77,23 +77,3 @@ metadata:
 spec:
   owner: upendrasahu
   domain: fitness
-
----
-apiVersion: backstage.io/v1alpha1
-kind: Location
-metadata:
-  name: exercise-tracker-users
-  description: Location for the Exercise Tracker User entity
-spec:
-  type: url
-  target: https://github.com/upendrasahu/exercise_tracker/blob/main/users.yaml
-
----
-apiVersion: backstage.io/v1alpha1
-kind: Location
-metadata:
-  name: exercise-tracker-groups
-  description: Location for the Exercise Tracker Group entity
-spec:
-  type: url
-  target: https://github.com/upendrasahu/exercise_tracker/blob/main/groups.yaml
