@@ -1,0 +1,88 @@
+replicaCount: 1
+
+# Main exercise tracker service
+exerciseTracker:
+  image:
+    repository: exercise-tracker
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 5000
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  env:
+    - name: FLASK_APP
+      value: "app.py"
+    - name: FLASK_ENV
+      value: "production"
+    - name: DATABASE_URL
+      value: "sqlite:///data/exercise_data.db"
+    - name: SECRET_KEY
+      valueFrom:
+        secretKeyRef:
+          name: exercise-tracker-secrets
+          key: secret-key
+
+# Coach service
+coachService:
+  enabled: true
+  image:
+    repository: exercise-tracker-coach
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 5001
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  env:
+    - name: FLASK_APP
+      value: "app.py"
+    - name: FLASK_ENV
+      value: "production"
+    - name: EXERCISE_SERVICE_URL
+      value: "http://exercise-tracker-service:5000"
+    - name: REDIS_URL
+      value: ""
+    - name: OPENAI_API_KEY
+      valueFrom:
+        secretKeyRef:
+          name: coach-service-secrets
+          key: openai-api-key
+  # For local development, you can set the API key here.
+  # In production, this should be provided through a proper secret management system.
+  openaiApiKey: ""
+
+nameOverride: ""
+fullnameOverride: ""
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: exercise-tracker.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+persistence:
+  enabled: true
+  storageClassName: ""
+  accessMode: ReadWriteOnce
+  size: 1Gi
+  mountPath: /app/data

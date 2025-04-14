@@ -1,0 +1,19 @@
+{{- if .Values.coachService.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "exercise-tracker.fullname" . }}-coach
+  labels:
+    {{- include "exercise-tracker.labels" . | nindent 4 }}
+    app.kubernetes.io/component: coach-service
+spec:
+  type: {{ .Values.coachService.service.type }}
+  ports:
+    - port: {{ .Values.coachService.service.port }}
+      targetPort: {{ .Values.coachService.service.targetPort }}
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "exercise-tracker.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: coach-service
+{{- end }}

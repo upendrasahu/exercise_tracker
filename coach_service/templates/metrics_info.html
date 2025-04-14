@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Metrics Information - Fitness Coach Service{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-success text-white">
+        <h1 class="h3 mb-0">Prometheus Metrics Information</h1>
+    </div>
+    <div class="card-body">
+        <p>This service exposes Prometheus metrics at <a href="/metrics" target="_blank">/metrics</a> endpoint for monitoring and observability.</p>
+
+        <h2 class="h4 mt-4">Available Metrics</h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Metric Name</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Labels</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>coach_service_request_count</code></td>
+                        <td>Counter</td>
+                        <td>Total number of HTTP requests</td>
+                        <td>app_name, method, endpoint, http_status</td>
+                    </tr>
+                    <tr>
+                        <td><code>coach_service_request_latency_seconds</code></td>
+                        <td>Histogram</td>
+                        <td>HTTP request latency in seconds</td>
+                        <td>app_name, endpoint</td>
+                    </tr>
+                    <tr>
+                        <td><code>coach_service_openai_request_count</code></td>
+                        <td>Counter</td>
+                        <td>Number of OpenAI API requests</td>
+                        <td>app_name, status</td>
+                    </tr>
+                    <tr>
+                        <td><code>coach_service_openai_request_latency_seconds</code></td>
+                        <td>Histogram</td>
+                        <td>OpenAI API request latency in seconds</td>
+                        <td>app_name</td>
+                    </tr>
+                    <tr>
+                        <td><code>coach_service_cache_hit_count</code></td>
+                        <td>Counter</td>
+                        <td>Number of cache hits</td>
+                        <td>app_name</td>
+                    </tr>
+                    <tr>
+                        <td><code>coach_service_cache_miss_count</code></td>
+                        <td>Counter</td>
+                        <td>Number of cache misses</td>
+                        <td>app_name</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 class="h4 mt-4">Using with Prometheus</h2>
+        <p>To scrape these metrics with Prometheus, add the following to your <code>prometheus.yml</code> configuration:</p>
+        <pre class="bg-light p-3"><code>scrape_configs:
+  - job_name: 'coach_service'
+    static_configs:
+      - targets: ['localhost:5001']</code></pre>
+
+        <h2 class="h4 mt-4">Metrics Visualization</h2>
+        <p>These metrics can be visualized using Grafana dashboards to monitor:</p>
+        <ul>
+            <li>API request rates and latencies</li>
+            <li>OpenAI API performance and error rates</li>
+            <li>Cache hit/miss ratios</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

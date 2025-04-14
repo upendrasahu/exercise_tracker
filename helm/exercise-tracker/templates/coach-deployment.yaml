@@ -1,0 +1,41 @@
+{{- if .Values.coachService.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "exercise-tracker.fullname" . }}-coach
+  labels:
+    {{- include "exercise-tracker.labels" . | nindent 4 }}
+    app.kubernetes.io/component: coach-service
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "exercise-tracker.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: coach-service
+  template:
+    metadata:
+      labels:
+        {{- include "exercise-tracker.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: coach-service
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-coach
+          image: "{{ .Values.coachService.image.repository }}:{{ .Values.coachService.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.coachService.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.coachService.service.targetPort }}
+              protocol: TCP
+          env:
+            {{- toYaml .Values.coachService.env | nindent 12 }}
+          resources:
+            {{- toYaml .Values.coachService.resources | nindent 12 }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+{{- end }}

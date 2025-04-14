@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "exercise-tracker.fullname" . }}
+  labels:
+    {{- include "exercise-tracker.labels" . | nindent 4 }}
+    app.kubernetes.io/component: exercise-tracker
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "exercise-tracker.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: exercise-tracker
+  template:
+    metadata:
+      labels:
+        {{- include "exercise-tracker.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: exercise-tracker
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.exerciseTracker.image.repository }}:{{ .Values.exerciseTracker.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.exerciseTracker.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.exerciseTracker.service.targetPort }}
+              protocol: TCP
+          env:
+            {{- toYaml .Values.exerciseTracker.env | nindent 12 }}
+          resources:
+            {{- toYaml .Values.exerciseTracker.resources | nindent 12 }}
+          {{- if .Values.persistence.enabled }}
+          volumeMounts:
+            - name: data
+              mountPath: {{ .Values.persistence.mountPath }}
+          {{- end }}
+      {{- if .Values.persistence.enabled }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "exercise-tracker.fullname" . }}
+      {{- end }}

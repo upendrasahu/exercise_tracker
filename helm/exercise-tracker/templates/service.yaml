@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "exercise-tracker.fullname" . }}
+  labels:
+    {{- include "exercise-tracker.labels" . | nindent 4 }}
+    app.kubernetes.io/component: exercise-tracker
+spec:
+  type: {{ .Values.exerciseTracker.service.type }}
+  ports:
+    - port: {{ .Values.exerciseTracker.service.port }}
+      targetPort: {{ .Values.exerciseTracker.service.targetPort }}
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "exercise-tracker.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: exercise-tracker

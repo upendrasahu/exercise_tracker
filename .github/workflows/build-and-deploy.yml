@@ -1,0 +1,117 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  REGISTRY: ghcr.io
+  EXERCISE_IMAGE_NAME: ${{ github.repository_owner }}/exercise-tracker
+  COACH_IMAGE_NAME: ${{ github.repository_owner }}/exercise-tracker-coach
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest
+          pip install -r requirements.txt
+
+      - name: Lint with flake8
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+      - name: Log in to GitHub Container Registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Build and push exercise tracker image
+      - name: Extract Docker metadata for exercise-tracker
+        id: meta-exercise
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.EXERCISE_IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=sha,format=short
+
+      - name: Build and push exercise-tracker Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta-exercise.outputs.tags }}
+          labels: ${{ steps.meta-exercise.outputs.labels }}
+
+      # Build and push coach service image
+      - name: Extract Docker metadata for coach-service
+        id: meta-coach
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.COACH_IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=sha,format=short
+
+      - name: Build and push coach-service Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./coach_service
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta-coach.outputs.tags }}
+          labels: ${{ steps.meta-coach.outputs.labels }}
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: 'v3.8.0'
+
+      - name: Configure Kubernetes
+        uses: azure/k8s-set-context@v1
+        with:
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+
+      - name: Deploy to Kubernetes
+        run: |
+          IMAGE_TAG=$(echo $GITHUB_SHA | head -c7)
+          helm upgrade --install exercise-tracker ./helm/exercise-tracker \
+            --set exerciseTracker.image.repository=${{ env.REGISTRY }}/${{ env.EXERCISE_IMAGE_NAME }} \
+            --set exerciseTracker.image.tag=$IMAGE_TAG \
+            --set coachService.image.repository=${{ env.REGISTRY }}/${{ env.COACH_IMAGE_NAME }} \
+            --set coachService.image.tag=$IMAGE_TAG \
+            --set coachService.openaiApiKey=${{ secrets.OPENAI_API_KEY }} \
+            --namespace default

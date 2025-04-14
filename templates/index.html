@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mb-4 d-flex justify-content-between align-items-center">
+    <h1>Exercise Tracker</h1>
+    <div>
+        <a href="{{ url_for('main.coach_advice') }}" class="btn btn-success me-2">
+            <i class="fas fa-dumbbell"></i> Get Coach Advice
+        </a>
+        <a href="{{ url_for('main.add_exercise') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add Exercise
+        </a>
+    </div>
+</div>
+
+{% if exercises %}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Exercise</th>
+                    <th>Sets</th>
+                    <th>Reps</th>
+                    <th>Weight</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for exercise in exercises %}
+                <tr>
+                    <td>{{ exercise.date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ exercise.name }}</td>
+                    <td>{{ exercise.sets }}</td>
+                    <td>{{ exercise.reps }}</td>
+                    <td>{% if exercise.weight %}{{ exercise.weight }} kg{% else %}-{% endif %}</td>
+                    <td>{{ exercise.notes or "-" }}</td>
+                    <td>
+                        <div class="btn-group btn-group-sm">
+                            <a href="{{ url_for('main.edit_exercise', id=exercise.id) }}" class="btn btn-outline-primary">Edit</a>
+                            <a href="{{ url_for('main.delete_exercise', id=exercise.id) }}" class="btn btn-outline-danger"
+                               onclick="return confirm('Are you sure you want to delete this exercise?')">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        <p>No exercises found. <a href="{{ url_for('main.add_exercise') }}">Add your first exercise</a>!</p>
+    </div>
+{% endif %}
+{% endblock %}

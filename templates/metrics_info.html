@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Metrics Information - Exercise Tracker{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h1 class="h3 mb-0">Prometheus Metrics Information</h1>
+    </div>
+    <div class="card-body">
+        <p>This application exposes Prometheus metrics at <a href="/metrics" target="_blank">/metrics</a> endpoint for monitoring and observability.</p>
+
+        <h2 class="h4 mt-4">Available Metrics</h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Metric Name</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Labels</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>exercise_tracker_request_count</code></td>
+                        <td>Counter</td>
+                        <td>Total number of HTTP requests</td>
+                        <td>app_name, method, endpoint, http_status</td>
+                    </tr>
+                    <tr>
+                        <td><code>exercise_tracker_request_latency_seconds</code></td>
+                        <td>Histogram</td>
+                        <td>HTTP request latency in seconds</td>
+                        <td>app_name, endpoint</td>
+                    </tr>
+                    <tr>
+                        <td><code>exercise_tracker_db_operation_count</code></td>
+                        <td>Counter</td>
+                        <td>Number of database operations performed</td>
+                        <td>app_name, operation, entity</td>
+                    </tr>
+                    <tr>
+                        <td><code>exercise_tracker_active_exercises_count</code></td>
+                        <td>Gauge</td>
+                        <td>Current number of exercises in the database</td>
+                        <td>None</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 class="h4 mt-4">Using with Prometheus</h2>
+        <p>To scrape these metrics with Prometheus, add the following to your <code>prometheus.yml</code> configuration:</p>
+        <pre class="bg-light p-3"><code>scrape_configs:
+  - job_name: 'exercise_tracker'
+    static_configs:
+      - targets: ['localhost:5000']</code></pre>
+
+        <h2 class="h4 mt-4">Grafana Dashboard</h2>
+        <p>For visualization, you can import the following JSON into Grafana to create a dashboard for these metrics.</p>
+    </div>
+</div>
+{% endblock %}
