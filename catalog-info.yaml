@@ -4,11 +4,11 @@ metadata:
   name: exercise-tracker
   description: An application for tracking and analyzing workout exercises with AI coaching
   annotations:
-    github.com/project-slug: upendrasahu/exercise-tracker
+    github.com/project-slug: upendrasahu/exercise_tracker
     backstage.io/techdocs-ref: dir:.
-    backstage.io/view-url: https://github.com/upendrasahu/exercise-tracker/tree/main
-    backstage.io/edit-url: https://github.com/upendrasahu/exercise-tracker/edit/main
-    backstage.io/source-location: url:https://github.com/upendrasahu/exercise-tracker
+    backstage.io/view-url: https://github.com/upendrasahu/exercise_tracker/tree/main
+    backstage.io/edit-url: https://github.com/upendrasahu/exercise_tracker/edit/main
+    backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
     github.com/workflows-provider: github
     github.com/workflows-branch: main
   tags:
@@ -18,13 +18,13 @@ metadata:
     - fitness
     - openai
   links:
-    - url: https://github.com/upendrasahu/exercise-tracker
+    - url: https://github.com/upendrasahu/exercise_tracker
       title: GitHub Repository
       icon: github
-    - url: https://github.com/upendrasahu/exercise-tracker/issues
+    - url: https://github.com/upendrasahu/exercise_tracker/issues
       title: Issues
       icon: github
-    - url: https://github.com/upendrasahu/exercise-tracker/actions
+    - url: https://github.com/upendrasahu/exercise_tracker/actions
       title: GitHub Workflows
       icon: github
 spec:
@@ -43,7 +43,7 @@ metadata:
   name: exercise-tracker-coach
   description: AI coaching service that provides personalized fitness advice
   annotations:
-    github.com/project-slug: upendrasahu/exercise-tracker
+    github.com/project-slug: upendrasahu/exercise_tracker
     github.com/workflows-provider: github
     github.com/workflows-branch: main
   tags:
