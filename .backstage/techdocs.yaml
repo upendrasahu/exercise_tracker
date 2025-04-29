@@ -1,0 +1,6 @@
+site_name: 'Exercise Tracker'
+site_description: 'An application for tracking and analyzing workout exercises with AI coaching'
+
+# Required for Backstage TechDocs
+backend:
+  type: 'local'
