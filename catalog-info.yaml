@@ -4,36 +4,21 @@ metadata:
   name: exercise-tracker
   description: An application for tracking and analyzing workout exercises with AI coaching
   annotations:
-    # github.com/project-slug: upendrasahu/exercise_tracker  # Commenting out to prevent GitHub API calls
+    # github.com/project-slug: upendrasahu/exercise_tracker  # Keep commented if causing issues
     backstage.io/techdocs-ref: dir:.
-    backstage.io/view-url: https://github.com/upendrasahu/exercise_tracker/tree/main
-    backstage.io/edit-url: https://github.com/upendrasahu/exercise_tracker/edit/main
-    # backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker # Commenting out to prevent GitHub API calls
-    github.com/actions-workflows-branch: main
-    github.com/actions-workflow-enforce: "true"
+    backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
     backstage.io/kubernetes-id: exercise-tracker
-    argocd/app-name: exercise-tracker
-    prometheus.io/rule: exercise-tracker-alerts
   tags:
     - python
     - flask
-    - kubernetes
-    - fitness
-    - openai
   links:
     - url: https://github.com/upendrasahu/exercise_tracker
-      title: GitHub Repository
-      icon: github
-    - url: https://github.com/upendrasahu/exercise_tracker/issues
-      title: Issues
-      icon: github
-    - url: https://github.com/upendrasahu/exercise_tracker/actions
-      title: GitHub Workflows
+      title: Repository
       icon: github
 spec:
   type: service
-  lifecycle: production
-  owner: upendrasahu
+  lifecycle: production # Or other appropriate lifecycle value
+  owner: upendrasahu # Or the owning team/user
   system: fitness-platform
   dependsOn:
     - resource:exercise-tracker-db
@@ -48,18 +33,14 @@ metadata:
   name: exercise-tracker-coach
   description: AI coaching service that provides personalized fitness advice
   annotations:
-    # github.com/project-slug: upendrasahu/exercise_tracker # Commenting out to prevent GitHub API calls
-    github.com/actions-workflows-branch: main
-    github.com/actions-workflow-enforce: "true"
-    backstage.io/kubernetes-id: exercise-tracker-coach
-    argocd/app-name: exercise-tracker-coach
-    prometheus.io/rule: coach-service-alerts
+    # github.com/project-slug: upendrasahu/exercise_tracker # Keep commented if causing issues
     backstage.io/techdocs-ref: dir:.
+    backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
+    backstage.io/kubernetes-id: exercise-tracker-coach
   tags:
     - python
     - flask
     - openai
-    - ai
 spec:
   type: service
   lifecycle: production
@@ -94,7 +75,7 @@ metadata:
   description: A platform for fitness tracking and AI coaching
 spec:
   owner: upendrasahu
-  domain: fitness
+  domain: fitness # Or other appropriate domain
 
 ---
 apiVersion: backstage.io/v1alpha1
@@ -102,17 +83,17 @@ kind: API
 metadata:
   name: exercise-tracker-api
   description: REST API for tracking exercises and retrieving exercise data
+  annotations:
+    backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
+    backstage.io/techdocs-ref: dir:. 
   tags:
     - rest
-    - json
-    - exercise
-    - python
-  annotations:
-    # backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker # Commenting out to prevent GitHub API calls
-    backstage.io/techdocs-ref: dir:.
-    prometheus.io/rule: exercise-tracker-api-alerts
+    - fitness
   links:
-    - url: https://github.com/upendrasahu/exercise_tracker/blob/main/docs/api-main.md
+    - url: ./api-specs/exercise-tracker-api.yaml
+      title: API Definition
+      icon: code
+    - url: ./docs/api-main.md
       title: API Documentation
       icon: doc
 spec:
@@ -129,26 +110,20 @@ kind: API
 metadata:
   name: coach-service-api
   description: REST API for AI-powered fitness coaching and personalized advice
+  annotations:
+    backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
+    backstage.io/techdocs-ref: dir:.
   tags:
     - rest
-    - json
     - ai
-    - coach
-    - openai
-  annotations:
-    # backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker # Commenting out to prevent GitHub API calls
-    backstage.io/techdocs-ref: dir:.
-    prometheus.io/rule: coach-service-api-alerts
+    - coaching
   links:
-    - url: https://github.com/upendrasahu/exercise_tracker
-      title: GitHub Repository
-      icon: github
-    - url: https://github.com/upendrasahu/exercise_tracker/issues
-      title: Issues
-      icon: github
-    - url: https://github.com/upendrasahu/exercise_tracker/actions
-      title: GitHub Workflows
-      icon: github
+    - url: ./api-specs/coach-service-api.yaml
+      title: API Definition
+      icon: code
+    - url: ./docs/api-coach.md
+      title: API Documentation
+      icon: doc
 spec:
   type: openapi
   lifecycle: production
