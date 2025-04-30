@@ -4,7 +4,7 @@ metadata:
   name: exercise-tracker
   description: An application for tracking and analyzing workout exercises with AI coaching
   annotations:
-    # github.com/project-slug: upendrasahu/exercise_tracker  # Keep commented if causing issues
+    github.com/project-slug: upendrasahu/exercise_tracker
     backstage.io/techdocs-ref: dir:.
     backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
     backstage.io/kubernetes-id: exercise-tracker
@@ -17,8 +17,8 @@ metadata:
       icon: github
 spec:
   type: service
-  lifecycle: production # Or other appropriate lifecycle value
-  owner: upendrasahu # Or the owning team/user
+  lifecycle: production
+  owner: upendrasahu
   system: fitness-platform
   dependsOn:
     - resource:exercise-tracker-db
@@ -33,7 +33,7 @@ metadata:
   name: exercise-tracker-coach
   description: AI coaching service that provides personalized fitness advice
   annotations:
-    # github.com/project-slug: upendrasahu/exercise_tracker # Keep commented if causing issues
+    github.com/project-slug: upendrasahu/exercise_tracker
     backstage.io/techdocs-ref: dir:.
     backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
     backstage.io/kubernetes-id: exercise-tracker-coach
@@ -75,7 +75,7 @@ metadata:
   description: A platform for fitness tracking and AI coaching
 spec:
   owner: upendrasahu
-  domain: fitness # Or other appropriate domain
+  domain: fitness
 
 ---
 apiVersion: backstage.io/v1alpha1
@@ -84,6 +84,7 @@ metadata:
   name: exercise-tracker-api
   description: REST API for tracking exercises and retrieving exercise data
   annotations:
+    github.com/project-slug: upendrasahu/exercise_tracker
     backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
     backstage.io/techdocs-ref: dir:. 
   tags:
@@ -111,6 +112,7 @@ metadata:
   name: coach-service-api
   description: REST API for AI-powered fitness coaching and personalized advice
   annotations:
+    github.com/project-slug: upendrasahu/exercise_tracker
     backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
     backstage.io/techdocs-ref: dir:.
   tags:
