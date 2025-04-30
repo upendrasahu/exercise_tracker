@@ -11,3 +11,18 @@ spec:
   members:
     - upendrasahu
   children: []
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: upendrasahu
+  description: Personal group for upendrasahu
+spec:
+  type: team
+  profile:
+    displayName: Upendra Sahu
+    email: upendrasahu@example.com
+  members:
+    - upendrasahu
+  children: []
