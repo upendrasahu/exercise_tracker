@@ -90,10 +90,10 @@ metadata:
     - rest
     - fitness
   links:
-    - url: ./api-specs/exercise-tracker-api.yaml
+    - url: https://github.com/upendrasahu/exercise_tracker/blob/main/api-specs/exercise-tracker-api.yaml
       title: API Definition
       icon: code
-    - url: ./docs/api-main.md
+    - url: https://github.com/upendrasahu/exercise_tracker/blob/main/docs/api-main.md
       title: API Documentation
       icon: doc
 spec:
@@ -118,10 +118,10 @@ metadata:
     - ai
     - coaching
   links:
-    - url: ./api-specs/coach-service-api.yaml
+    - url: https://github.com/upendrasahu/exercise_tracker/blob/main/api-specs/coach-service-api.yaml
       title: API Definition
       icon: code
-    - url: ./docs/api-coach.md
+    - url: https://github.com/upendrasahu/exercise_tracker/blob/main/docs/api-coach.md
       title: API Documentation
       icon: doc
 spec:
