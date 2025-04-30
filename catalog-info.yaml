@@ -8,7 +8,7 @@ metadata:
     backstage.io/techdocs-ref: dir:.
     backstage.io/view-url: https://github.com/upendrasahu/exercise_tracker/tree/main
     backstage.io/edit-url: https://github.com/upendrasahu/exercise_tracker/edit/main
-    backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
+    # backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker # Commenting out to prevent GitHub API calls
     github.com/actions-workflows-branch: main
     github.com/actions-workflow-enforce: "true"
     backstage.io/kubernetes-id: exercise-tracker
@@ -108,7 +108,7 @@ metadata:
     - exercise
     - python
   annotations:
-    backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
+    # backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker # Commenting out to prevent GitHub API calls
     backstage.io/techdocs-ref: dir:.
     prometheus.io/rule: exercise-tracker-api-alerts
   links:
@@ -136,7 +136,7 @@ metadata:
     - coach
     - openai
   annotations:
-    backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
+    # backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker # Commenting out to prevent GitHub API calls
     backstage.io/techdocs-ref: dir:.
     prometheus.io/rule: coach-service-api-alerts
   links:
