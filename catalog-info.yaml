@@ -6,7 +6,7 @@ metadata:
   annotations:
     github.com/project-slug: upendrasahu/exercise_tracker
     backstage.io/techdocs-ref: dir:.
-    backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
+    backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker/blob/main
     backstage.io/kubernetes-id: exercise-tracker
   tags:
     - python
@@ -35,7 +35,7 @@ metadata:
   annotations:
     github.com/project-slug: upendrasahu/exercise_tracker
     backstage.io/techdocs-ref: dir:.
-    backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
+    backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker/blob/main
     backstage.io/kubernetes-id: exercise-tracker-coach
   tags:
     - python
@@ -85,7 +85,7 @@ metadata:
   description: REST API for tracking exercises and retrieving exercise data
   annotations:
     github.com/project-slug: upendrasahu/exercise_tracker
-    backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
+    backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker/blob/main
     backstage.io/techdocs-ref: dir:. 
   tags:
     - rest
@@ -113,7 +113,7 @@ metadata:
   description: REST API for AI-powered fitness coaching and personalized advice
   annotations:
     github.com/project-slug: upendrasahu/exercise_tracker
-    backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker
+    backstage.io/source-location: url:https://github.com/upendrasahu/exercise_tracker/blob/main
     backstage.io/techdocs-ref: dir:.
   tags:
     - rest
