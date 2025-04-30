@@ -4,7 +4,7 @@ metadata:
   name: exercise-tracker
   description: An application for tracking and analyzing workout exercises with AI coaching
   annotations:
-    github.com/project-slug: upendrasahu/exercise_tracker
+    # github.com/project-slug: upendrasahu/exercise_tracker  # Commenting out to prevent GitHub API calls
     backstage.io/techdocs-ref: dir:.
     backstage.io/view-url: https://github.com/upendrasahu/exercise_tracker/tree/main
     backstage.io/edit-url: https://github.com/upendrasahu/exercise_tracker/edit/main
@@ -48,7 +48,7 @@ metadata:
   name: exercise-tracker-coach
   description: AI coaching service that provides personalized fitness advice
   annotations:
-    github.com/project-slug: upendrasahu/exercise_tracker
+    # github.com/project-slug: upendrasahu/exercise_tracker # Commenting out to prevent GitHub API calls
     github.com/actions-workflows-branch: main
     github.com/actions-workflow-enforce: "true"
     backstage.io/kubernetes-id: exercise-tracker-coach
